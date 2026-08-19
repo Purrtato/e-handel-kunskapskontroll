@@ -8,6 +8,7 @@ const { Pool } = pg
 dotenv.config()
 const app = express()
 app.use(cors())
+app.use(express.json())
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -46,6 +47,24 @@ app.get('/products/:id', async (req, res) => {
   } catch (err) {
     console.error(err)
     res.status(500).json({ error: 'Kunde inte hämta produkten' })
+  }
+})
+
+app.post('/products', async (req, res) => {
+  try {
+    const { name, description, price, category, stock, image_url } = req.body
+
+    const result = await pool.query(
+      `INSERT INTO products (name, description, price, category, stock, image_url, is_active)
+       VALUES ($1, $2, $3, $4, $5, $6, true)
+       RETURNING *`,
+      [name, description, price, category, stock, image_url]
+    )
+
+    res.status(201).json(result.rows[0])
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Kunde inte skapa produkten' })
   }
 })
 
