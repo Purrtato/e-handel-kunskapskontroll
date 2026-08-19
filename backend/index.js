@@ -68,5 +68,46 @@ app.post('/products', async (req, res) => {
   }
 })
 
+app.put('/products/:id', async (req, res) => {
+  try {
+    const { name, description, price, category, stock, image_url } = req.body
+
+    const result = await pool.query(
+      `UPDATE products
+       SET name = $1, description = $2, price = $3, category = $4, stock = $5, image_url = $6
+       WHERE id = $7
+       RETURNING *`,
+      [name, description, price, category, stock, image_url, req.params.id]
+    )
+
+    if (!result.rows[0]) {
+      return res.status(404).json({ error: 'Produkten hittades inte' })
+    }
+
+    res.json(result.rows[0])
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Kunde inte uppdatera produkten' })
+  }
+})
+
+app.delete('/products/:id', async (req, res) => {
+  try {
+    const result = await pool.query(
+      `UPDATE products SET is_active = false WHERE id = $1 RETURNING *`,
+      [req.params.id]
+    )
+
+    if (!result.rows[0]) {
+      return res.status(404).json({ error: 'Produkten hittades inte' })
+    }
+
+    res.json({ message: 'Produkten togs bort', product: result.rows[0] })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Kunde inte ta bort produkten' })
+  }
+})
+
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => console.log(`Servern kör på port ${PORT}`))
