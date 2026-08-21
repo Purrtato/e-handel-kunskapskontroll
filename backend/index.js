@@ -20,6 +20,10 @@ pool.query('SELECT NOW()', (err, res) => {
   else console.log('DB ansluten:', res.rows[0])
 })
 
+app.get('/', (req, res) => {
+  res.send('E-handel API, servern kör')
+})
+
 app.get('/products', async (req, res) => {
   try {
     const result = await pool.query(
