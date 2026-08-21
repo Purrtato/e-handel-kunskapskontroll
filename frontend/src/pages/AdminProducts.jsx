@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { API_URL } from '../config'
 
 function AdminProducts() {
   // Listan med alla produkter, hämtade från backend
@@ -20,7 +21,7 @@ function AdminProducts() {
 
   // Hämtar alla produkter från backend och sparar dem i "products"-state
   function fetchProducts() {
-    fetch('http://localhost:3000/products')
+    fetch(`${API_URL}/products`)
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.error(err))
@@ -46,8 +47,8 @@ function AdminProducts() {
 
     // Väljer URL och metod beroende på om vi skapar (POST) eller redigerar (PUT)
     const url = editingId
-      ? `http://localhost:3000/products/${editingId}`
-      : 'http://localhost:3000/products'
+      ? `${API_URL}/products/${editingId}`
+      : `${API_URL}/products`
     const method = editingId ? 'PUT' : 'POST'
 
     fetch(url, {
@@ -81,7 +82,7 @@ function AdminProducts() {
   function handleDelete(id) {
     if (!confirm('Ta bort produkten?')) return // Avbryt om man klickar "Avbryt" i rutan
 
-    fetch(`http://localhost:3000/products/${id}`, { method: 'DELETE' })
+    fetch(`${API_URL}/products/${id}`, { method: 'DELETE' })
       .then(() => fetchProducts()) // Hämta uppdaterad lista (produkten är nu is_active=false)
       .catch(err => console.error(err))
   }

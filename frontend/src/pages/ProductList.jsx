@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useCart } from '../context/CartContext'
+import { API_URL } from '../config'
 
 function ProductList() {
   // Listan med alla produkter, hämtade från backend
@@ -10,7 +11,7 @@ function ProductList() {
 
   // Körs en gång när sidan laddas, hämtar produkterna direkt
   useEffect(() => {
-    fetch('http://localhost:3000/products')
+    fetch(`${API_URL}/products`)
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.error(err))
