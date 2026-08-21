@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
 
 function AdminProducts() {
-  // products: listan med alla produkter, hämtade från backend
+  // Listan med alla produkter, hämtade från backend
   const [products, setProducts] = useState([])
 
-  // formData: håller värdena i formuläret just nu
+  // Håller värdena i formuläret just nu
   const [formData, setFormData] = useState({
     name: '', description: '', price: '', category: '', stock: '', image_url: ''
   })
@@ -52,13 +52,13 @@ function AdminProducts() {
 
     fetch(url, {
       method,
-      headers: { 'Content-Type': 'application/json' }, // säger till backend "det här är JSON"
-      body: JSON.stringify(formData) // gör om formData-objektet till en JSON-sträng
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData) // Gör om formData-objektet till en JSON-sträng
     })
       .then(res => res.json())
       .then(() => {
-        resetForm()       // töm formuläret
-        fetchProducts()   // hämta uppdaterad lista, så ändringen syns direkt
+        resetForm()       // Töm formuläret
+        fetchProducts()   // Hämta uppdaterad lista, så ändringen syns direkt
       })
       .catch(err => console.error(err))
   }
@@ -74,15 +74,15 @@ function AdminProducts() {
       stock: product.stock,
       image_url: product.image_url
     })
-    setEditingId(product.id) // "kom ihåg" vilken produkt vi redigerar
+    setEditingId(product.id) // "Kom ihåg" vilken produkt vi redigerar
   }
 
   // Körs när man klickar "Ta bort"
   function handleDelete(id) {
-    if (!confirm('Ta bort produkten?')) return // avbryt om man klickar "Avbryt" i rutan
+    if (!confirm('Ta bort produkten?')) return // Avbryt om man klickar "Avbryt" i rutan
 
     fetch(`http://localhost:3000/products/${id}`, { method: 'DELETE' })
-      .then(() => fetchProducts()) // hämta uppdaterad lista (produkten är nu is_active=false)
+      .then(() => fetchProducts()) // Hämta uppdaterad lista (produkten är nu is_active=false)
       .catch(err => console.error(err))
   }
 
@@ -90,7 +90,7 @@ function AdminProducts() {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Admin - Produkter</h1>
 
-      {/* Formuläret - samma fält används för både "skapa" och "redigera" */}
+      {/* Formuläret, samma fält används för både "skapa" och "redigera" */}
       <form onSubmit={handleSubmit} className="space-y-3 mb-8 max-w-md">
         <input name="name" value={formData.name} onChange={handleChange} placeholder="Namn" className="border p-2 rounded w-full" required />
         <input name="description" value={formData.description} onChange={handleChange} placeholder="Beskrivning" className="border p-2 rounded w-full" />
@@ -116,7 +116,7 @@ function AdminProducts() {
       {/* Listar alla produkter, en rad per produkt */}
       <ul className="space-y-2">
         {products.map(product => (
-          // key krävs av React för att hålla koll på varje rad unikt
+          // Key krävs av React för att hålla koll på varje rad unikt
           <li key={product.id} className="border p-3 rounded-lg flex justify-between items-center">
             <span>{product.name} - {product.price} kr</span>
             <div className="flex gap-2">
