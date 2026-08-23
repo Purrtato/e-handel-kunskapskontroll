@@ -31,9 +31,14 @@ export function CartProvider({ children }) {
     setCart(prev => prev.filter(item => item.id !== id))
   }
 
-  // Delar ut cart, addToCart och removeFromCart till alla children
+  // Tömmer hela varukorgen (körs efter ett lyckat köp i checkout)
+  function clearCart() {
+    setCart([])
+  }
+
+  // Delar ut cart, addToCart, removeFromCart och clearCart till alla children
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
       {children}
     </CartContext.Provider>
   )

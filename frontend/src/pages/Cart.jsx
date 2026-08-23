@@ -1,4 +1,5 @@
 import { useCart } from '../context/CartContext'
+import { Link } from 'react-router-dom'
 
 function Cart() {
   // Hämtar varukorgens innehåll och funktionerna från Context
@@ -32,9 +33,11 @@ function Cart() {
 
           <p className="text-lg font-semibold mb-4">Totalt: {total} kr</p>
 
-          <button className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
-            Gå till checkout
-          </button>
+            <Link
+              to="/checkout"
+              className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 inline-block text-center">
+              Gå till checkout
+            </Link>
         </>
       )}
     </div>
