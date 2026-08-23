@@ -5,6 +5,7 @@ import AdminProducts from './pages/AdminProducts'
 import Cart from './pages/Cart'
 import Checkout from './pages/Checkout'
 import OrderConfirmation from './pages/OrderConfirmation'
+import AdminOrders from './pages/AdminOrders'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/admin/products" element={<AdminProducts />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
+        <Route path="/admin/orders" element={<AdminOrders />} />
       </Routes>
     </>
   )

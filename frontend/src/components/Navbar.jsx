@@ -15,6 +15,7 @@ function Navbar() {
         Varukorg {itemCount > 0 && `(${itemCount})`}
       </Link>
       <Link to="/admin/products" className="hover:underline">Admin</Link>
+      <Link to="/admin/orders" className="hover:underline">Ordrar</Link>
     </nav>
   )
 }

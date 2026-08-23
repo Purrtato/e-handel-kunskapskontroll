@@ -54,6 +54,31 @@ app.get('/products/:id', async (req, res) => {
   }
 })
 
+app.get('/orders', async (req, res) => {
+  try {
+    // Hämtar alla ordrar, senaste först
+    const ordersResult = await pool.query(
+      'SELECT * FROM orders ORDER BY created_at DESC'
+    )
+
+    // För varje order, hämta även vilka produkter som beställdes
+    const orders = await Promise.all(
+      ordersResult.rows.map(async order => {
+        const itemsResult = await pool.query(
+          'SELECT * FROM order_items WHERE order_id = $1',
+          [order.id]
+        )
+        return { ...order, items: itemsResult.rows }
+      })
+    )
+
+    res.json(orders)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Kunde inte hämta ordrar' })
+  }
+})
+
 app.post('/products', async (req, res) => {
   try {
     const { name, description, price, category, stock, image_url } = req.body
