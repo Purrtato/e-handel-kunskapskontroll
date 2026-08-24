@@ -43,65 +43,103 @@ function Checkout() {
   }
 
   if (cart.length === 0) {
-    return <p className="p-4">Din varukorg är tom.</p>
+    return (
+      <div className="min-h-screen bg-slate-900 p-6">
+        <p className="text-slate-400">Din varukorg är tom.</p>
+      </div>
+    )
   }
 
-  return (
-    <div className="p-4 max-w-md">
-      <h1 className="text-2xl font-bold mb-4">Checkout</h1>
+    if (cart.length === 0) {
+    return (
+      <div className="min-h-screen bg-slate-900 p-6 flex items-center justify-center">
+        <p className="text-slate-400">Din varukorg är tom.</p>
+      </div>
+    )
+  }
 
-      <p className="mb-4 font-semibold">Totalt: {total} kr</p>
+    return (
+    <div className="min-h-screen bg-slate-900 p-6">
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-3xl font-bold text-white mb-6">Checkout</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <input
-          type="text"
-          value={customerName}
-          onChange={e => setCustomerName(e.target.value)}
-          placeholder="Namn"
-          className="border p-2 rounded w-full"
-          required
-        />
-        <input
-          type="email"
-          value={customerEmail}
-          onChange={e => setCustomerEmail(e.target.value)}
-          placeholder="E-post"
-          className="border p-2 rounded w-full"
-          required
-        />
+        <div className="grid md:grid-cols-2 gap-8">
 
-        {/* Betalningsformulär, bara för utseendet */}
-        <input
-          type="text"
-          value={cardNumber}
-          onChange={e => setCardNumber(e.target.value)}
-          placeholder="Kortnummer"
-          className="border p-2 rounded w-full"
-          required
-        />
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={expiry}
-            onChange={e => setExpiry(e.target.value)}
-            placeholder="MM/ÅÅ"
-            className="border p-2 rounded w-1/2"
-            required
-          />
-          <input
-            type="text"
-            value={cvc}
-            onChange={e => setCvc(e.target.value)}
-            placeholder="CVC"
-            className="border p-2 rounded w-1/2"
-            required
-          />
+          {/* Vänster kolumn, formuläret */}
+          <div>
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <input
+                type="text"
+                value={customerName}
+                onChange={e => setCustomerName(e.target.value)}
+                placeholder="Namn"
+                className="bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg w-full focus:border-emerald-400 focus:outline-none"
+                required
+              />
+              <input
+                type="email"
+                value={customerEmail}
+                onChange={e => setCustomerEmail(e.target.value)}
+                placeholder="E-post"
+                className="bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg w-full focus:border-emerald-400 focus:outline-none"
+                required
+              />
+
+              <input
+                type="text"
+                value={cardNumber}
+                onChange={e => setCardNumber(e.target.value)}
+                placeholder="Kortnummer"
+                className="bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg w-full focus:border-emerald-400 focus:outline-none"
+                required
+              />
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={expiry}
+                  onChange={e => setExpiry(e.target.value)}
+                  placeholder="MM/ÅÅ"
+                  className="bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg w-1/2 focus:border-emerald-400 focus:outline-none"
+                  required
+                />
+                <input
+                  type="text"
+                  value={cvc}
+                  onChange={e => setCvc(e.target.value)}
+                  placeholder="CVC"
+                  className="bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg w-1/2 focus:border-emerald-400 focus:outline-none"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="bg-emerald-500 text-slate-900 font-semibold px-4 py-3 rounded-lg hover:bg-emerald-400 transition-colors w-full"
+              >
+                Betala {total} kr
+              </button>
+            </form>
+          </div>
+
+          {/* Höger kolumn, ordersammanfattning */}
+          <div className="bg-slate-800 border border-slate-700 rounded-xl p-5 h-fit">
+            <h2 className="text-lg font-semibold text-white mb-4">Din order</h2>
+            <ul className="space-y-3 mb-4">
+              {cart.map(item => (
+                <li key={item.id} className="flex justify-between gap-2 text-sm">
+                  <span className="text-slate-300 truncate">{item.name} x {item.quantity}</span>
+                  <span className="text-white whitespace-nowrap">{item.price * item.quantity} kr</span>
+                </li>
+              ))}
+            </ul>
+            <div className="border-t border-slate-700 pt-3 flex justify-between">
+              <span className="text-white font-semibold">Totalt</span>
+              <span className="text-emerald-400 font-bold text-lg">{total} kr</span>
+            </div>
+          </div>
+
         </div>
-
-        <button type="submit" className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 w-full">
-          Betala {total} kr
-        </button>
-      </form>
+      </div>
     </div>
   )
 }
