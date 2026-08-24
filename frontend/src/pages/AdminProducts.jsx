@@ -87,50 +87,117 @@ function AdminProducts() {
       .catch(err => console.error(err))
   }
 
-  return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Admin - Produkter</h1>
+    return (
+      <div className="min-h-screen bg-slate-900 p-6">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl font-bold text-white mb-6">Admin - Produkter</h1>
 
-      {/* Formuläret, samma fält används för både "skapa" och "redigera" */}
-      <form onSubmit={handleSubmit} className="space-y-3 mb-8 max-w-md">
-        <input name="name" value={formData.name} onChange={handleChange} placeholder="Namn" className="border p-2 rounded w-full" required />
-        <input name="description" value={formData.description} onChange={handleChange} placeholder="Beskrivning" className="border p-2 rounded w-full" />
-        <input name="price" type="number" value={formData.price} onChange={handleChange} placeholder="Pris" className="border p-2 rounded w-full" required />
-        <input name="category" value={formData.category} onChange={handleChange} placeholder="Kategori" className="border p-2 rounded w-full" />
-        <input name="stock" type="number" value={formData.stock} onChange={handleChange} placeholder="Lagerantal" className="border p-2 rounded w-full" />
-        <input name="image_url" value={formData.image_url} onChange={handleChange} placeholder="Bild-URL" className="border p-2 rounded w-full" />
+          <div className="grid md:grid-cols-2 gap-8">
 
-        <div className="flex gap-2">
-          {/* Knapptexten ändras beroende på om vi skapar eller redigerar */}
-          <button type="submit" className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
-            {editingId ? 'Spara ändringar' : 'Skapa produkt'}
-          </button>
-          {/* Avbryt-knappen visas bara när man faktiskt redigerar något */}
-          {editingId && (
-            <button type="button" onClick={resetForm} className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
-              Avbryt
-            </button>
-          )}
-        </div>
-      </form>
+            {/* Vänster kolumn, formuläret */}
+            <div>
+              <h2 className="text-lg font-semibold text-white mb-4">
+                {editingId ? 'Redigera produkt' : 'Ny produkt'}
+              </h2>
+              <form onSubmit={handleSubmit} className="space-y-3 max-w-sm">
+                <input
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Namn"
+                  className="bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg w-full focus:border-emerald-400 focus:outline-none"
+                  required
+                />
+                <input
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  placeholder="Beskrivning"
+                  className="bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg w-full focus:border-emerald-400 focus:outline-none"
+                />
+                <input
+                  name="price"
+                  type="number"
+                  value={formData.price}
+                  onChange={handleChange}
+                  placeholder="Pris"
+                  className="bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg w-full focus:border-emerald-400 focus:outline-none"
+                  required
+                />
+                <input
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  placeholder="Kategori"
+                  className="bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg w-full focus:border-emerald-400 focus:outline-none"
+                />
+                <input
+                  name="stock"
+                  type="number"
+                  value={formData.stock}
+                  onChange={handleChange}
+                  placeholder="Lagerantal"
+                  className="bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg w-full focus:border-emerald-400 focus:outline-none"
+                />
+                <input
+                  name="image_url"
+                  value={formData.image_url}
+                  onChange={handleChange}
+                  placeholder="Bild-URL"
+                  className="bg-slate-800 border border-slate-700 text-white placeholder-slate-500 p-3 rounded-lg w-full focus:border-emerald-400 focus:outline-none"
+                />
 
-      {/* Listar alla produkter, en rad per produkt */}
-      <ul className="space-y-2">
-        {products.map(product => (
-          // Key krävs av React för att hålla koll på varje rad unikt
-          <li key={product.id} className="border p-3 rounded-lg flex justify-between items-center">
-            <span>{product.name} - {product.price} kr</span>
-            <div className="flex gap-2">
-              <button onClick={() => handleEdit(product)} className="text-blue-600 hover:underline">
-                Redigera
-              </button>
-              <button onClick={() => handleDelete(product.id)} className="text-red-600 hover:underline">
-                Ta bort
-              </button>
+                <div className="flex gap-2">
+                  <button
+                    type="submit"
+                    className="bg-emerald-500 text-slate-900 font-semibold px-4 py-2 rounded-lg hover:bg-emerald-400 transition-colors"
+                  >
+                    {editingId ? 'Spara ändringar' : 'Skapa produkt'}
+                  </button>
+                  {editingId && (
+                    <button
+                      type="button"
+                      onClick={resetForm}
+                      className="bg-slate-700 text-slate-300 px-4 py-2 rounded-lg hover:bg-slate-600 transition-colors"
+                    >
+                      Avbryt
+                    </button>
+                  )}
+                </div>
+              </form>
             </div>
-          </li>
-        ))}
-      </ul>
+
+            {/* Höger kolumn, produktlistan */}
+            <div>
+              <h2 className="text-lg font-semibold text-white mb-4">Alla produkter</h2>
+              <ul className="space-y-2 max-h-[500px] overflow-y-auto pr-2">
+                {products.map(product => (
+                  <li
+                    key={product.id}
+                    className="bg-slate-800 border border-slate-700 p-3 rounded-lg flex justify-between items-center gap-2"
+                  >
+                    <span className="text-white truncate">{product.name} - {product.price} kr</span>
+                    <div className="flex gap-3 shrink-0">
+                      <button
+                        onClick={() => handleEdit(product)}
+                        className="text-emerald-400 hover:text-emerald-300 text-sm"
+                      >
+                        Redigera
+                      </button>
+                      <button
+                        onClick={() => handleDelete(product.id)}
+                        className="text-red-400 hover:text-red-300 text-sm"
+                      >
+                        Ta bort
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+        </div>
+      </div>
     </div>
   )
 }
