@@ -1,1 +1,18 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/r1QxwNOh)
+# Min E-handel
+
+En e-handel för retrospel m.m, byggd som ett skolprojekt.
+
+## Live-länkar
+- Frontend: https://e-handel-kunskapskontroll.vercel.app/
+- Backend API: https://e-handel-kunskapskontroll.onrender.com
+
+## Tech stack
+- Frontend: React (Vite), Tailwind CSS, React Router
+- Backend: Node.js, Express
+- Databas: PostgreSQL (Supabase)
+- Deploy: Vercel (frontend), Render (backend)
+
+## Kör lokalt (valfritt)
+1. `cd backend && npm install && npm run dev`
+2. `cd frontend && npm install && npm run dev`
+3. Skapa en `.env`-fil i `backend` med `DATABASE_URL` och `.env` i `frontend` med `VITE_API_URL`
