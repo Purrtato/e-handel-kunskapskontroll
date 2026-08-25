@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Cart() {
   // Hämtar varukorgens innehåll och funktionerna från Context
-  const { cart, removeFromCart } = useCart()
+  const { cart, removeFromCart, updateQuantity } = useCart()
 
   // Räknar ut totalsumman genom att summera pris * antal för varje rad
   // reduce "vandrar igenom" hela listan och bygger upp ett enda värde (summan)
@@ -15,8 +15,7 @@ function Cart() {
         <h1 className="text-3xl font-bold text-white mb-6">Varukorg</h1>
 
         {cart.length === 0 ? (
-          <p className="text-slate-400">Din varukorg är tom.</p>
-        ) : (
+          <p className="text-slate-400">Din varukorg är tom.</p>) : (
           <div className="grid md:grid-cols-2 gap-8">
 
             {/* Vänster kolumn, varorna */}
@@ -24,17 +23,33 @@ function Cart() {
               {cart.map(item => (
                 <li
                   key={item.id}
-                  className="bg-slate-800 border border-slate-700 p-4 rounded-xl flex justify-between items-center gap-2"
+                  className="bg-slate-800 border border-slate-700 p-4 rounded-xl"
                 >
-                  <span className="text-white truncate">{item.name} x {item.quantity}</span>
-                  <div className="flex items-center gap-4 shrink-0">
-                    <span className="text-emerald-400 font-semibold whitespace-nowrap">{item.price * item.quantity} kr</span>
-                    <button
-                      onClick={() => removeFromCart(item.id)}
-                      className="text-red-400 hover:text-red-300 text-sm"
-                    >
-                      Ta bort
-                    </button>
+                  <span className="text-white block mb-2">{item.name}</span>
+
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        className="bg-slate-700 text-white w-7 h-7 rounded-md hover:bg-slate-600">
+                        -
+                      </button>
+                      <span className="text-white w-4 text-center">{item.quantity}</span>
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        className="bg-slate-700 text-white w-7 h-7 rounded-md hover:bg-slate-600">
+                        +
+                      </button>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <span className="text-emerald-400 font-semibold whitespace-nowrap">{item.price * item.quantity} kr</span>
+                      <button
+                        onClick={() => removeFromCart(item.id)}
+                        className="text-red-400 hover:text-red-300 text-sm">
+                        Ta bort
+                      </button>
+                    </div>
                   </div>
                 </li>
               ))}

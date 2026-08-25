@@ -9,7 +9,7 @@ function Navbar() {
   const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0)
 
   return (
-    <nav className="flex items-center justify-between gap-4 px-6 py-4 bg-slate-950 border-b border-slate-800">
+    <nav className="flex flex-wrap items-center justify-between gap-4 px-6 py-4 bg-slate-950 border-b border-slate-800">
       <Link to="/" className="text-xl font-bold text-white tracking-tight">
         Retro<span className="text-emerald-400">Store</span>
       </Link>

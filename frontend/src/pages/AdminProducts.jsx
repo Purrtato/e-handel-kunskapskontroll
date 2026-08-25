@@ -92,10 +92,10 @@ function AdminProducts() {
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl font-bold text-white mb-6">Admin - Produkter</h1>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 min-w-0">
 
             {/* Vänster kolumn, formuläret */}
-            <div>
+            <div className="min-w-0">
               <h2 className="text-lg font-semibold text-white mb-4">
                 {editingId ? 'Redigera produkt' : 'Ny produkt'}
               </h2>
@@ -168,26 +168,23 @@ function AdminProducts() {
             </div>
 
             {/* Höger kolumn, produktlistan */}
-            <div>
+            <div className="min-w-0">
               <h2 className="text-lg font-semibold text-white mb-4">Alla produkter</h2>
               <ul className="space-y-2 max-h-[500px] overflow-y-auto pr-2">
                 {products.map(product => (
                   <li
                     key={product.id}
-                    className="bg-slate-800 border border-slate-700 p-3 rounded-lg flex justify-between items-center gap-2"
-                  >
-                    <span className="text-white truncate">{product.name} - {product.price} kr</span>
+                    className="bg-slate-800 border border-slate-700 p-3 rounded-lg flex justify-between items-center gap-2 min-w-0">
+                    <span className="text-white truncate min-w-0">{product.name} - {product.price} kr</span>
                     <div className="flex gap-3 shrink-0">
                       <button
                         onClick={() => handleEdit(product)}
-                        className="text-emerald-400 hover:text-emerald-300 text-sm"
-                      >
+                        className="text-emerald-400 hover:text-emerald-300 text-sm">
                         Redigera
                       </button>
                       <button
                         onClick={() => handleDelete(product.id)}
-                        className="text-red-400 hover:text-red-300 text-sm"
-                      >
+                        className="text-red-400 hover:text-red-300 text-sm">
                         Ta bort
                       </button>
                     </div>

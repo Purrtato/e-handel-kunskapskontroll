@@ -31,6 +31,17 @@ export function CartProvider({ children }) {
     setCart(prev => prev.filter(item => item.id !== id))
   }
 
+  // Ändrar antalet av en specifik produkt i varukorgen
+  function updateQuantity(id, newQuantity) {
+    if (newQuantity < 1) return // tillåt aldrig 0 eller negativt
+
+    setCart(prev =>
+      prev.map(item =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    )
+  }
+
   // Tömmer hela varukorgen (körs efter ett lyckat köp i checkout)
   function clearCart() {
     setCart([])
@@ -38,7 +49,7 @@ export function CartProvider({ children }) {
 
   // Delar ut cart, addToCart, removeFromCart och clearCart till alla children
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, updateQuantity }}>
       {children}
     </CartContext.Provider>
   )

@@ -63,7 +63,7 @@ function Checkout() {
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-6">Checkout</h1>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-8 min-w-0">
 
           {/* Vänster kolumn, formuläret */}
           <div>
@@ -122,13 +122,13 @@ function Checkout() {
           </div>
 
           {/* Höger kolumn, ordersammanfattning */}
-          <div className="bg-slate-800 border border-slate-700 rounded-xl p-5 h-fit">
+          <div className="bg-slate-800 border border-slate-700 rounded-xl p-5 h-fit min-w-0">
             <h2 className="text-lg font-semibold text-white mb-4">Din order</h2>
             <ul className="space-y-3 mb-4">
               {cart.map(item => (
-                <li key={item.id} className="flex justify-between gap-2 text-sm">
-                  <span className="text-slate-300 truncate">{item.name} x {item.quantity}</span>
-                  <span className="text-white whitespace-nowrap">{item.price * item.quantity} kr</span>
+                <li key={item.id} className="flex justify-between gap-2 text-sm min-w-0">
+                  <span className="text-slate-300 truncate min-w-0">{item.name} x {item.quantity}</span>
+                  <span className="text-white whitespace-nowrap shrink-0">{item.price * item.quantity} kr</span>
                 </li>
               ))}
             </ul>
